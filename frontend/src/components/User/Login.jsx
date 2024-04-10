@@ -29,7 +29,7 @@ const Login = () => {
 
   useEffect(() => {
     if (error) {
-      enqueueSnackbar(error, { variant: "error" });
+      // enqueueSnackbar(error, { variant: "error" });
       dispatch(clearErrors());
     }
     if (isAuthenticated) {
