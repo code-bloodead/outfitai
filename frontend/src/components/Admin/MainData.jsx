@@ -163,7 +163,7 @@ const MainData = () => {
 
   return (
     <>
-      <MetaData title="Admin Dashboard | Flipkart" />
+      <MetaData title="Admin Dashboard | OutfitAi" />
 
       <Row className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-6" style={{margin:'2vh'}}>
         <Col className="bg-purple-600 text-white rounded p-6">

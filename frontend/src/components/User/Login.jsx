@@ -39,7 +39,7 @@ const Login = () => {
 
   return (
     <>
-      <MetaData title="Login | Flipkart" />
+      <MetaData title="Login | OutfitAi" />
 
       {loading && <BackdropLoader />}
       <main className="w-full mt-12 sm:pt-20 sm:mt-0">
@@ -84,9 +84,9 @@ const Login = () => {
                   {/* <!-- button container --> */}
                   <div className="flex flex-col gap-2.5 mt-2 mb-32">
                     <p className="text-xs text-primary-grey text-left">
-                      By continuing, you agree to Flipkart's{" "}
+                      By continuing, you agree to OutfitAi's{" "}
                       <a
-                        href="https://www.flipkart.com/pages/terms"
+                        href="https://www.OutfitAi.com/pages/terms"
                         className="text-primary-blue"
                       >
                         {" "}
@@ -94,7 +94,7 @@ const Login = () => {
                       </a>{" "}
                       and{" "}
                       <a
-                        href="https://www.flipkart.com/pages/privacypolicy"
+                        href="https://www.OutfitAi.com/pages/privacypolicy"
                         className="text-primary-blue"
                       >
                         {" "}
@@ -123,7 +123,7 @@ const Login = () => {
                 to="/register"
                 className="font-medium text-sm text-primary-blue"
               >
-                New to Flipkart? Create an account
+                New to OutfitAi? Create an account
               </Link>
             </div>
             {/* <!-- edit info container --> */}

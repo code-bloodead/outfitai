@@ -105,7 +105,7 @@ const MyOrders = () => {
   };
   return (
     <>
-      <MetaData title="My Orders | Flipkart" />
+      <MetaData title="My Orders | OutfitAi" />
 
       <MinCategory />
       <main className="w-full mt-16 sm:mt-0">

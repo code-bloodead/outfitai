@@ -2,7 +2,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Searchbar from "./Searchbar";
-import logo from "../../../assets/images/logo.png";
+import logo from "../../../assets/images/outfit-ai-high-resolution-logo-transparent.png";
 import PrimaryDropDownMenu from "./PrimaryDropDownMenu";
 import SecondaryDropDownMenu from "./SecondaryDropDownMenu";
 import { useState } from "react";
@@ -17,17 +17,17 @@ const Header = () => {
   const [toggleSecondaryDropDown, setToggleSecondaryDropDown] = useState(false);
 
   return (
-    <header className="bg-primary-blue fixed top-0 py-2.5 w-full z-10">
+    <header className="bg-white fixed top-0 py-2.5 w-full z-10 shadow-lg">
       {/* <!-- navbar container --> */}
-      <div className="w-full sm:w-9/12 px-1 sm:px-4 m-auto flex justify-between items-center relative">
+      <div className="w-full sm:w-9/12 px-1 sm:px-4 m-auto flex justify-between items-center relative h-full">
         {/* <!-- logo & search container --> */}
-        <div className="flex items-center flex-1">
-          <Link className="h-7 mr-1 sm:mr-4" to="/">
+        <div className="flex items-center flex-1 p-0">
+          <Link className=" h-12 mr-1 sm:mr-4" to="/">
             <img
               draggable="false"
-              className="h-full w-full object-contain"
+              className="h-full mr-10"
               src={logo}
-              alt="Flipkart Logo"
+              alt="OutfitAi Logo"
             />
           </Link>
 
@@ -46,8 +46,9 @@ const Header = () => {
             </Link>
           ) : (
             <span
-              className="userDropDown flex items-center text-white font-medium gap-1 cursor-pointer"
+              className="userDropDown flex items-center text-[#FE633D] font-medium gap-1 cursor-pointer"
               onClick={() => setTogglePrimaryDropDown(!togglePrimaryDropDown)}
+              style={{ color: "#FE633D" }}
             >
               {user.name && user.name.split(" ", 1)}
               <span>
@@ -68,7 +69,7 @@ const Header = () => {
           )}
 
           <span
-            className="moreDropDown hidden sm:flex items-center text-white font-medium gap-1 cursor-pointer"
+            className="moreDropDown hidden sm:flex items-center text-[#FE633D] font-medium gap-1 cursor-pointer"
             onClick={() => setToggleSecondaryDropDown(!toggleSecondaryDropDown)}
           >
             More

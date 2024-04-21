@@ -159,7 +159,7 @@ const NewProduct = () => {
 
   return (
     <>
-      <MetaData title="Admin: New Product | Flipkart" />
+      <MetaData title="Admin: New Product | OutfitAi" />
 
       {loading && <BackdropLoader />}
       <form

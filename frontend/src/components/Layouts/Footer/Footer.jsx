@@ -12,31 +12,31 @@ const footerLinks = [
     links: [
       {
         name: "Contact Us",
-        redirect: "https://www.flipkart.com/helpcentre",
+        redirect: "https://www.OutfitAi.com/helpcentre",
       },
       {
         name: "About Us",
-        redirect: "https://www.flipkart.com/about-us",
+        redirect: "https://www.OutfitAi.com/about-us",
       },
       {
         name: "Careers",
-        redirect: "https://www.flipkartcareers.com",
+        redirect: "https://www.OutfitAicareers.com",
       },
       {
-        name: "Flipkart Stories",
-        redirect: "https://stories.flipkart.com",
+        name: "OutfitAi Stories",
+        redirect: "https://stories.OutfitAi.com",
       },
       {
         name: "Press",
-        redirect: "https://stories.flipkart.com/category/top-stories/news",
+        redirect: "https://stories.OutfitAi.com/category/top-stories/news",
       },
       {
-        name: "Flipkart Wholesale",
-        redirect: "https://www.flipkartwholesale.com",
+        name: "OutfitAi Wholesale",
+        redirect: "https://www.OutfitAiwholesale.com",
       },
       {
         name: "Corporate Information",
-        redirect: "https://www.flipkart.com/corporate-information",
+        redirect: "https://www.OutfitAi.com/corporate-information",
       },
     ],
   },
@@ -45,21 +45,21 @@ const footerLinks = [
     links: [
       {
         name: "Payments",
-        redirect: "https://www.flipkart.com/pages/payments",
+        redirect: "https://www.OutfitAi.com/pages/payments",
       },
       {
         name: "Shipping",
-        redirect: "https://www.flipkart.com/pages/shipping",
+        redirect: "https://www.OutfitAi.com/pages/shipping",
       },
       {
         name: "Cancellation & Returns",
         redirect:
-          "https://www.flipkart.com/helpcentre?catalog=55c9c6edb000002e002c1701&view=CATALOG",
+          "https://www.OutfitAi.com/helpcentre?catalog=55c9c6edb000002e002c1701&view=CATALOG",
       },
       {
         name: "FAQ",
         redirect:
-          "https://www.flipkart.com/helpcentre?catalog=55c9c8e2b0000023002c1702&view=CATALOG",
+          "https://www.OutfitAi.com/helpcentre?catalog=55c9c8e2b0000023002c1702&view=CATALOG",
       },
     ],
   },
@@ -68,27 +68,27 @@ const footerLinks = [
     links: [
       {
         name: "Return Policy",
-        redirect: "https://www.flipkart.com/pages/returnpolicy",
+        redirect: "https://www.OutfitAi.com/pages/returnpolicy",
       },
       {
         name: "Terms Of Use",
-        redirect: "https://www.flipkart.com/pages/terms",
+        redirect: "https://www.OutfitAi.com/pages/terms",
       },
       {
         name: "Security",
-        redirect: "https://www.flipkart.com/pages/paymentsecurity",
+        redirect: "https://www.OutfitAi.com/pages/paymentsecurity",
       },
       {
         name: "Privacy",
-        redirect: "https://www.flipkart.com/pages/privacypolicy",
+        redirect: "https://www.OutfitAi.com/pages/privacypolicy",
       },
       {
         name: "Sitemap",
-        redirect: "https://www.flipkart.com/sitemap",
+        redirect: "https://www.OutfitAi.com/sitemap",
       },
       {
         name: "EPR Compliance",
-        redirect: "https://www.flipkart.com/pages/ewaste-compliance-tnc",
+        redirect: "https://www.OutfitAi.com/pages/ewaste-compliance-tnc",
       },
     ],
   },
@@ -97,15 +97,15 @@ const footerLinks = [
     links: [
       {
         name: "Facebook",
-        redirect: "https://www.facebook.com/flipkart",
+        redirect: "https://www.facebook.com/OutfitAi",
       },
       {
         name: "Twitter",
-        redirect: "https://twitter.com/flipkart",
+        redirect: "https://twitter.com/OutfitAi",
       },
       {
         name: "YouTube",
-        redirect: "https://www.youtube.com/flipkart",
+        redirect: "https://www.youtube.com/OutfitAi",
       },
     ],
   },
@@ -153,7 +153,7 @@ const Footer = () => {
               <div className="w-full sm:w-1/2">
                 <h2 className="text-primary-grey">Mail Us:</h2>
                 <p className="mt-2 leading-5">
-                  Flipkart Internet Private Limited,
+                  OutfitAi Internet Private Limited,
                   <br />
                   Buildings Alyssa, Begonia &<br />
                   Clove Embassy Tech Village,
@@ -171,7 +171,7 @@ const Footer = () => {
                   Registered Office Address:
                 </h2>
                 <p className="mt-2 leading-5">
-                  Flipkart Internet Private Limited,
+                  OutfitAi Internet Private Limited,
                   <br />
                   Buildings Alyssa, Begonia &<br />
                   Clove Embassy Tech Village,
@@ -195,51 +195,51 @@ const Footer = () => {
 
           <div className="px-16 py-6 w-full bg-primary-darkBlue hidden sm:flex justify-between items-center text-sm text-white">
             <a
-              href="https://seller.flipkart.com/sell-online"
+              href="https://seller.OutfitAi.com/sell-online"
               target="_blank"
               rel="noreferrer"
               className="flex items-center gap-2"
             >
-              <span className="text-yellow-400">
+              <span className="text-[#FE633D]">
                 <WorkIcon sx={{ fontSize: "20px" }} />
               </span>{" "}
-              Sell On Flipkart
+              Sell On OutfitAi
             </a>
             <a
-              href="https://brands.flipkart.com"
+              href="https://brands.OutfitAi.com"
               target="_blank"
               rel="noreferrer"
               className="flex items-center gap-2"
             >
-              <span className="text-yellow-400">
+              <span className="text-[#FE633D]">
                 <StarsIcon sx={{ fontSize: "20px" }} />
               </span>{" "}
               Advertise
             </a>
             <a
-              href="https://www.flipkart.com/the-gift-card-store"
+              href="https://www.OutfitAi.com/the-gift-card-store"
               rel="noreferrer"
               target="_blank"
               className="flex items-center gap-2"
             >
-              <span className="text-yellow-400">
+              <span className="text-[#FE633D]">
                 <CardGiftcardIcon sx={{ fontSize: "20px" }} />
               </span>{" "}
               Gift Cards
             </a>
             <a
-              href="https://www.flipkart.com/helpcentre"
+              href="https://www.OutfitAi.com/helpcentre"
               target="_blank"
               rel="noreferrer"
               className="flex items-center gap-2"
             >
-              <span className="text-yellow-400">
+              <span className="text-[#FE633D]">
                 <HelpIcon sx={{ fontSize: "20px" }} />
               </span>{" "}
               Help Center
             </a>
 
-            <span>&copy; 2007-{new Date().getFullYear()} Flipkart.com</span>
+            <span>&copy; 2007-{new Date().getFullYear()} OutfitAi.com</span>
             <img draggable="false" src={paymentMethods} alt="Card Payment" />
           </div>
         </>

@@ -85,7 +85,7 @@ const Products = () => {
 
   return (
     <>
-      <MetaData title="All Products | Flipkart" />
+      <MetaData title="All Products | OutfitAi" />
 
       <MinCategory setCategory={setCategory} />
       <main className="w-full mt-14 sm:mt-0">

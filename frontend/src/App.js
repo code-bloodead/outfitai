@@ -348,8 +348,8 @@ function App() {
 
 const styles = {
   fabio: {
-    background: "#f2ad2d",
-    color: "#1a232e",
+    background: "#FE633D",
+    color: "#ffffff",
     position: "fixed",
     top: "85vh",
     left: "92vw",

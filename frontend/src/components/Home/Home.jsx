@@ -42,7 +42,7 @@ const Home = () => {
 
   return (
     <>
-      <MetaData title="Flipkart" />
+      <MetaData title="OutfitAi" />
       <Categories />
       <main className="flex flex-col gap-3 px-2 mt-16 sm:mt-2">
         {/* <Banner /> */}

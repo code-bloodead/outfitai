@@ -1,10 +1,10 @@
-import mobiles from "../../assets/images/Categories/phone.png";
+import mobiles from "../../assets/images/Categories/shoes.jpg";
 import mens from "../../assets/images/Categories/mens.png";
 import women from "../../assets/images/Categories/women.png";
 import kids from "../../assets/images/Categories/kids.png";
-import electronics from "../../assets/images/Categories/electronics.png";
+import electronics from "../../assets/images/Categories/activewear.jpg";
 import unisex from "../../assets/images/Categories/unisex.png";
-import appliances from "../../assets/images/Categories/appliances.png";
+import appliances from "../../assets/images/Categories/denimwear.jpg";
 import beauty from "../../assets/images/Categories/beauty.png";
 import accessories from "../../assets/images/Categories/accessories.png";
 import { Link } from "react-router-dom";
@@ -31,19 +31,19 @@ const catNav = [
     icon: accessories,
   },
   {
-    name: "Mobiles",
+    name: "Shoes",
     icon: mobiles,
   },
   {
-    name: "Electronics",
+    name: "Activewear",
     icon: electronics,
   },
   {
-    name: "Appliances",
+    name: "Denimwear",
     icon: appliances,
   },
   {
-    name: "Beauty,Toys & more",
+    name: "Beauty & more",
     icon: beauty,
   },
 ];
@@ -61,7 +61,7 @@ const Categories = () => {
             <div className="h-16 w-16">
               <img
                 draggable="false"
-                className="h-full w-full object-contain"
+                className="h-full w-full object-contain rounded-full"
                 src={item.icon}
                 alt={item.name}
               />
