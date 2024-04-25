@@ -29,14 +29,14 @@ const ProductGrid = () => {
 
   var count = 15 - personalizedProducts?.length;
 
-  useEffect(() => {
-    if (error) {
-      enqueueSnackbar(error, { variant: "error" });
-      dispatch(clearErrors());
-    }
-    if (user?.customer_id && (recommendedProducts || []).length < 1)
-      dispatch(getRecommendedProducts(user.customer_id));
-  }, [dispatch, user, error, enqueueSnackbar]);
+  // useEffect(() => {
+  //   if (error) {
+  //     enqueueSnackbar(error, { variant: "error" });
+  //     dispatch(clearErrors());
+  //   }
+  //   if (user?.customer_id && (recommendedProducts || []).length < 1)
+  //     dispatch(getRecommendedProducts(user.customer_id));
+  // }, [dispatch, user, error, enqueueSnackbar]);
 
   return (
     <div className="flex flex-col gap-1 pb-4 justify-center items-center w-full overflow-hidden bg-white rounded-md">
