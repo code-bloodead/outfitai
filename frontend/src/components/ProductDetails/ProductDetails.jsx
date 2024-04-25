@@ -177,15 +177,38 @@ const ProductDetails = () => {
       [GarmentCategory.LowerBody]: [
         "jeans",
         "trouser",
+        "trousers",
         "pant",
+        "pants",
         "skirt",
+        "skirts",
         "lower",
         "lower body",
       ],
       [GarmentCategory.Dress]: ["kurta", "saree", "dress", "gown", "anarkali"],
     };
+    const MiscOverrideProds = {
+      [GarmentCategory.UpperBody]: ["suit, shirt"],
+      [GarmentCategory.LowerBody]: ["trousers"],
+      [GarmentCategory.Dress]: ["saree"],
+    }
+    for (const [category, keywords] of Object.entries(MiscOverrideProds)) {
+      if (
+        keywords.some(
+          (keyword) =>
+            product.name?.toLowerCase().includes(keyword) ||
+            product.category?.toLowerCase().includes(keyword) ||
+            product.product_group_name?.toLowerCase().includes(keyword)
+        )
+      ) {
+        return category;
+      }
+    }
 
     for (const [category, keywords] of Object.entries(garmentTypeMapping)) {
+      console.log(product.name?.toLowerCase());
+      console.log(product.category?.toLowerCase());
+      console.log(product.product_group_name?.toLowerCase());
       if (
         keywords.some(
           (keyword) =>
