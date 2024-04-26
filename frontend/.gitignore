@@ -2,6 +2,8 @@
 
 .env
 
+**/venv/
+
 # dependencies
 /node_modules
 /.pnp
