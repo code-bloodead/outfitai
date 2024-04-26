@@ -35,7 +35,13 @@ import {
 } from "../../actions/wishlistAction";
 import MinCategory from "../Layouts/MinCategory";
 import MetaData from "../Layouts/MetaData";
+import BackdropLoader from "../Layouts/BackdropLoader";
 import { myOrders } from "../../actions/orderAction";
+import {
+  tryoutSpecifiedCloth,
+  getSampleImages,
+  GarmentCategory,
+} from "../../apis/ootdiffusion";
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
@@ -48,6 +54,9 @@ const ProductDetails = () => {
   const [viewAll, setViewAll] = useState(false);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
+
+  const [generatingTryout, setGeneratingTryout] = useState(false);
+  const [generatedImageSrcs, setGeneratedImageSrcs] = useState([]);
 
   const { product, loading, error } = useSelector(
     (state) => state.productDetails
@@ -71,6 +80,7 @@ const ProductDetails = () => {
     prevArrow: <PreviousBtn />,
     nextArrow: <NextBtn />,
   };
+
   const productId = params.id;
   useEffect(() => {
     if (error) {
@@ -146,6 +156,113 @@ const ProductDetails = () => {
     navigate("/shipping");
   };
 
+  const resolveGarmentCategory = () => {
+    if(!product)
+      return GarmentCategory.Dress
+
+    // Instead of or, use array of keywords for each category
+    const garmentTypeMapping = {
+      [GarmentCategory.UpperBody]: [
+        "shirt",
+        "tshirt",
+        "top",
+        "blouse",
+        "upper",
+        "upper body",
+        "hoody",
+        "jacket",
+        "coat",
+        'suit'
+      ],
+      [GarmentCategory.LowerBody]: [
+        "jeans",
+        "trouser",
+        "trousers",
+        "pant",
+        "pants",
+        "skirt",
+        "skirts",
+        "lower",
+        "lower body",
+      ],
+      [GarmentCategory.Dress]: ["kurta", "saree", "dress", "gown", "anarkali"],
+    };
+    const MiscOverrideProds = {
+      [GarmentCategory.UpperBody]: ["suit, shirt"],
+      [GarmentCategory.LowerBody]: ["trousers"],
+      [GarmentCategory.Dress]: ["saree"],
+    }
+    for (const [category, keywords] of Object.entries(MiscOverrideProds)) {
+      if (
+        keywords.some(
+          (keyword) =>
+            product.name?.toLowerCase().includes(keyword) ||
+            product.category?.toLowerCase().includes(keyword) ||
+            product.product_group_name?.toLowerCase().includes(keyword)
+        )
+      ) {
+        return category;
+      }
+    }
+
+    for (const [category, keywords] of Object.entries(garmentTypeMapping)) {
+      console.log(product.name?.toLowerCase());
+      console.log(product.category?.toLowerCase());
+      console.log(product.product_group_name?.toLowerCase());
+      if (
+        keywords.some(
+          (keyword) =>
+            product.name?.toLowerCase().includes(keyword) ||
+            product.description?.toLowerCase().includes(keyword) ||
+            product.category?.toLowerCase().includes(keyword) ||
+            product.product_group_name?.toLowerCase().includes(keyword)
+        )
+      ) {
+        return category;
+      }
+    }
+    return GarmentCategory.Dress;
+  };
+  const outfitCategory = resolveGarmentCategory();
+
+  const tryOutfit = async () => {
+    const { person } = await getSampleImages(outfitCategory);
+    const cloth = product.images[0].url;
+    const category = outfitCategory;
+
+    console.log("Try outfit for", { person, cloth, category });
+
+    setGeneratingTryout(true)
+
+    function abortWithErr(){
+      enqueueSnackbar("Failed to try out image", { variant: "error" });
+      setGeneratingTryout(false)
+    }
+
+    const newGeneratedImages = await tryoutSpecifiedCloth(
+      person,
+      cloth,
+      category
+    ).catch((err) => {
+      console.log(err);
+      abortWithErr()
+    });
+
+    if(!newGeneratedImages || newGeneratedImages?.length === 0) {
+      abortWithErr()
+      return
+    }
+    console.log("Generated Images", newGeneratedImages);
+    setGeneratingTryout(false)
+
+    setGeneratedImageSrcs((prevImageSrcs) => [
+      ...newGeneratedImages,
+      ...prevImageSrcs,
+    ]);
+  };
+
+  console.log(product);
+
   useEffect(() => {
     dispatch(getSimilarProducts(product?.category));
   }, [dispatch, product, product?.category]);
@@ -159,6 +276,7 @@ const ProductDetails = () => {
           <MetaData title={product.name} />
           <MinCategory />
           <main className="mt-12 sm:mt-0">
+            {generatingTryout && <BackdropLoader />}
             {/* <!-- product image & description container --> */}
             <div className="w-full flex flex-col sm:flex-row bg-white sm:p-2 relative">
               {/* <!-- image wrapper --> */}
@@ -167,6 +285,16 @@ const ProductDetails = () => {
                 <div className="flex flex-col gap-3 m-3">
                   <div className="w-full h-full pb-6 border relative">
                     <Slider {...settings}>
+                      {generatedImageSrcs &&
+                        generatedImageSrcs.map((src, i) => (
+                          <img
+                            draggable="false"
+                            className="w-full h-96 object-contain"
+                            src={src}
+                            alt={product.name}
+                            key={i}
+                          />
+                        ))}
                       {product.images &&
                         product.images.map((item, i) => (
                           <img
@@ -216,6 +344,15 @@ const ProductDetails = () => {
                       {product.stock < 1 ? "OUT OF STOCK" : "BUY NOW"}
                     </button>
                     {/* <!-- add to cart btn --> */}
+                  </div>
+                  <div className="w-full flex gap-3">
+                    <button
+                      onClick={tryOutfit}
+                      className="p-4 w-1/2 flex items-center justify-center gap-2 text-white bg-primary-orange rounded-sm shadow hover:shadow-lg"
+                    >
+                      <FlashOnIcon />
+                      Try out {outfitCategory}
+                    </button>
                   </div>
                 </div>
                 {/* <!-- imgbox --> */}
