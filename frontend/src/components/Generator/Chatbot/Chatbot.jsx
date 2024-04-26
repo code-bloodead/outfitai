@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import ChatBody from "./ChatBody";
-import ChatInput from "./ChatInput";
+import ChatBody from "./ChatBody.jsx";
+import ChatInput from "./ChatInput.jsx";
 import axios from "axios";
 import {
   generateOutfit,
   getLlmRecommendations,
   getOutfitPrompts,
 } from "../../../apis/genai.ts";
-import { addPersonalizedProducts } from "../../../actions/productAction";
+import { addPersonalizedProducts } from "../../../actions/productAction.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useSnackbar } from "notistack";
-import { questions } from "../../../utils/constants";
+import { questions } from "../../../utils/constants.js";
 
 const Chatbot = () => {
   const dispatch = useDispatch();
@@ -34,32 +34,29 @@ const Chatbot = () => {
 
   const getAIResponse = async (newMessage) => {
     const userMessage = newMessage.message;
-    // await Promise.resolve(setChat((prev) => [...prev, newMessage]));
     setLoading(true);
 
-    const [outfits, llmRecommendations] = await Promise.all([
-      getOutfitPrompts(userMessage, chat.length < 11),
-      getLlmRecommendations(userMessage, chat.length < 11),
-    ]);
+    var question = `Suggest outfits for a ${localStorage.getItem(
+      "age"
+    )} year old ${localStorage.getItem(
+      "gender"
+    )} with following preferences: ${userMessage}`;
+
+    const [descriptions, products, response] =
+      (await getOutfitPrompts(question)) || [];
 
     setChat((prev) => [
       ...prev,
-      { sender: "ai", message: outfits.answer.trim(), images: [] },
+      { sender: "ai", message: response.trim() || "", images: [] },
     ]);
 
     const generatedOutfits = await Promise.all(
-      outfits.outfit_descriptions.map((prompt, idx) =>
+      descriptions.map((prompt, idx) =>
         generateOutfit(userMessage, prompt, `Outfit ${idx + 1}`)
-      )
+      ) || []
     );
-
-    dispatch(addPersonalizedProducts(llmRecommendations.articles));
-
-    console.log({
-      outfits,
-      llmRecommendations,
-      generatedOutfits,
-    });
+    const article_ids = products.map((product) => product.meta.article_id);
+    dispatch(addPersonalizedProducts(article_ids));
 
     setLoading(false);
 
@@ -73,8 +70,6 @@ const Chatbot = () => {
 
   const uploadImage = async (url) => {
     setLoading(true);
-    // Image not visible properly
-    // setChat((prev) => [...prev, { sender: "ai", message: "", images: [url] }]);
     dispatch(
       addPersonalizedProducts([
         "0607350001",

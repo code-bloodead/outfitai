@@ -12,29 +12,35 @@ import { NEGATIVE_PROMPT_BODY, STEPS } from "../constants/prompting.ts";
 //   return URL.createObjectURL(blob);
 // }
 
-export async function getOutfitPrompts(prompt: string, newChat: boolean) {
-  // Test response
-  // await Promise.resolve(new Promise(resolve => setTimeout(resolve, 300)));
-  // const response = OutfitResponse;
-  const response: {
-    product_ids: Record<string, string>;
-    article_ids: Record<string, string>;
-    products_data: any[];
-    answer: string;
-    outfit_descriptions: string[];
-  } = await axios
-    .post(`${LLM_API_URL}/generativeOutfits`, {
+function extractOutfitDescriptions(text: string) {
+  const descriptions: String[] = [];
+  const outfits = text.split("Outfit").slice(1);
+  for (let outfit of outfits) {
+    const description = outfit.split(":")[1].trim();
+    descriptions.push(description);
+  }
+  return descriptions;
+}
+
+export const getOutfitPrompts = async (prompt: string) => {
+  const response = await axios
+    .post(`${LLM_API_URL}/qa`, {
       prompt,
-      new: newChat,
     })
     .then((res) => res.data);
 
   console.log("Outfit prompts", response);
+  const descriptions = extractOutfitDescriptions(response?.results[0]);
+  const AiResponse = response.results[0].substring(
+    response.results[0].indexOf("Outfit 1:")
+  );
+
   return {
-    outfit_descriptions: response.outfit_descriptions || [],
-    answer: response.answer,
+    descriptions: descriptions || [],
+    products: response?.documents.slice(0, 3) || [],
+    response: AiResponse,
   };
-}
+};
 
 export async function getLlmRecommendations(prompt: string, newChat: boolean) {
   // Test response
@@ -63,7 +69,7 @@ export async function getLlmRecommendations(prompt: string, newChat: boolean) {
 function sdNegativePromptGenerator() {
   return NEGATIVE_PROMPT_BODY;
 }
-function finalSdPromptGenerator(userPrompt, rawOutfitPrompt) {
+function finalSdPromptGenerator(userPrompt: string, rawOutfitPrompt: string) {
   const prefix =
     "8k uhd, dslr, soft lighting, high quality, film grain, full frame, Fujifilm XT3 ";
   const body = `full portrait photo ${userPrompt} wearing ${rawOutfitPrompt} <lora:add_detail:1> `;
