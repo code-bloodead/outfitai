@@ -8,7 +8,8 @@
 
 # Run frontend & Backend
 npm run setup
-npm run dev
+cd frontend && npm start
+nodemon backend/server.js
 
 
 # Tryon demo (API proxy for Huggingface spaces)
