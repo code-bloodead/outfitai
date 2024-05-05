@@ -43,6 +43,8 @@ import {
   GarmentCategory,
 } from "../../apis/ootdiffusion";
 
+import UploadImageModal from "./UploadImageModal";
+
 const ProductDetails = () => {
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
@@ -54,6 +56,11 @@ const ProductDetails = () => {
   const [viewAll, setViewAll] = useState(false);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
+
+  const [showModal, setShowModal] = useState(false);
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   const [generatingTryout, setGeneratingTryout] = useState(false);
   const [generatedImageSrcs, setGeneratedImageSrcs] = useState([]);
@@ -157,8 +164,7 @@ const ProductDetails = () => {
   };
 
   const resolveGarmentCategory = () => {
-    if(!product)
-      return GarmentCategory.Dress
+    if (!product) return GarmentCategory.Dress;
 
     // Instead of or, use array of keywords for each category
     const garmentTypeMapping = {
@@ -172,7 +178,7 @@ const ProductDetails = () => {
         "hoody",
         "jacket",
         "coat",
-        'suit'
+        "suit",
       ],
       [GarmentCategory.LowerBody]: [
         "jeans",
@@ -191,7 +197,7 @@ const ProductDetails = () => {
       [GarmentCategory.UpperBody]: ["suit, shirt"],
       [GarmentCategory.LowerBody]: ["trousers"],
       [GarmentCategory.Dress]: ["saree"],
-    }
+    };
     for (const [category, keywords] of Object.entries(MiscOverrideProds)) {
       if (
         keywords.some(
@@ -225,18 +231,17 @@ const ProductDetails = () => {
   };
   const outfitCategory = resolveGarmentCategory();
 
-  const tryOutfit = async () => {
-    const { person } = await getSampleImages(outfitCategory);
+  const tryOutfit = async (person) => {
     const cloth = product.images[0].url;
     const category = outfitCategory;
 
     console.log("Try outfit for", { person, cloth, category });
 
-    setGeneratingTryout(true)
+    setGeneratingTryout(true);
 
-    function abortWithErr(){
+    function abortWithErr() {
       enqueueSnackbar("Failed to try out image", { variant: "error" });
-      setGeneratingTryout(false)
+      setGeneratingTryout(false);
     }
 
     const newGeneratedImages = await tryoutSpecifiedCloth(
@@ -245,15 +250,15 @@ const ProductDetails = () => {
       category
     ).catch((err) => {
       console.log(err);
-      abortWithErr()
+      abortWithErr();
     });
 
-    if(!newGeneratedImages || newGeneratedImages?.length === 0) {
-      abortWithErr()
-      return
+    if (!newGeneratedImages || newGeneratedImages?.length === 0) {
+      abortWithErr();
+      return;
     }
     console.log("Generated Images", newGeneratedImages);
-    setGeneratingTryout(false)
+    setGeneratingTryout(false);
 
     setGeneratedImageSrcs((prevImageSrcs) => [
       ...newGeneratedImages,
@@ -273,6 +278,13 @@ const ProductDetails = () => {
         <Loader />
       ) : (
         <>
+          {showModal && (
+            <UploadImageModal
+              closeModal={closeModal}
+              tryOutfit={tryOutfit}
+              pid={product._id}
+            />
+          )}
           <MetaData title={product.name} />
           <MinCategory />
           <main className="mt-12 sm:mt-0">
@@ -347,7 +359,9 @@ const ProductDetails = () => {
                   </div>
                   <div className="w-full flex gap-3">
                     <button
-                      onClick={tryOutfit}
+                      onClick={() => {
+                        setShowModal(true);
+                      }}
                       className="p-4 w-1/2 flex items-center justify-center gap-2 text-white bg-primary-orange rounded-sm shadow hover:shadow-lg"
                     >
                       <FlashOnIcon />

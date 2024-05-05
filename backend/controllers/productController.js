@@ -7,6 +7,7 @@ const ErrorHandler = require("../utils/errorHandler");
 const User = require("../models/userModel");
 const Order = require("../models/orderModel");
 const Product = require("../models/productModel");
+const CustomImage = require("../models/customImage");
 
 // Get All Products
 exports.getAllProducts = asyncErrorHandler(async (req, res, next) => {
@@ -490,6 +491,32 @@ exports.addToCart = asyncErrorHandler(async (req, res, next) => {
     });
   } catch (error) {
     console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+exports.uploadPersonalizedImage = asyncErrorHandler(async (req, res, next) => {
+  try {
+    const userId = req.user._id;
+    const r = req.file.path;
+    const result = await cloudinary.v2.uploader.upload(r, {
+      folder: "personalized",
+    });
+    const ci = await CustomImage.create({
+      product_id: req.body.productId,
+      user_id: userId,
+      image: {
+        public_id: result.public_id,
+        url: result.secure_url,
+      },
+    });
+    res.status(200).json({
+      success: true,
+      image: ci,
+    });
+  } catch (error) {
+    console.error(error);
+    console.log(error);
     res.status(500).json({ error: "Server error" });
   }
 });

@@ -5,5 +5,5 @@
 /backend/config/config.env
 
 .idea
-
+/uploads
 **/venv/
