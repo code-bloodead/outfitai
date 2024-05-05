@@ -1,20 +1,14 @@
 import React, { useState } from "react";
 import ChatBody from "./ChatBody.jsx";
 import ChatInput from "./ChatInput.jsx";
-import axios from "axios";
-import {
-  generateOutfit,
-  getLlmRecommendations,
-  getOutfitPrompts,
-} from "../../../apis/genai.ts";
+
+import { generateOutfit, getOutfitPrompts } from "../../../apis/genai.ts";
 import { addPersonalizedProducts } from "../../../actions/productAction.js";
 import { useDispatch, useSelector } from "react-redux";
-import { useSnackbar } from "notistack";
 import { questions } from "../../../utils/constants.js";
 
 const Chatbot = () => {
   const dispatch = useDispatch();
-  const { enqueueSnackbar } = useSnackbar();
   const { user } = useSelector((state) => state.user);
   const [loading, setLoading] = useState(false);
   const [index, setIndex] = useState(0);
@@ -42,8 +36,8 @@ const Chatbot = () => {
       "gender"
     )} with following preferences: ${userMessage}`;
 
-    const [descriptions, products, response] =
-      (await getOutfitPrompts(question)) || [];
+    const { descriptions, products, response } =
+      (await getOutfitPrompts(question)) || {};
 
     setChat((prev) => [
       ...prev,
@@ -52,7 +46,13 @@ const Chatbot = () => {
 
     const generatedOutfits = await Promise.all(
       descriptions.map((prompt, idx) =>
-        generateOutfit(userMessage, prompt, `Outfit ${idx + 1}`)
+        generateOutfit(
+          localStorage.getItem("age"),
+          localStorage.getItem("gender"),
+          userMessage,
+          prompt,
+          `Outfit ${idx + 1}`
+        )
       ) || []
     );
     const article_ids = products.map((product) => product.meta.article_id);
@@ -82,17 +82,14 @@ const Chatbot = () => {
 
   const sendMessage = async (newMessage) => {
     await Promise.resolve(setChat((prev) => [...prev, newMessage]));
-    if (localStorage.getItem("gender") !== null && index === 0) {
-      console.log("Hi");
-    }
+
     if (localStorage.getItem("age") !== null && index <= 1) {
       setIndex(index + 1);
     }
-    console.log(localStorage.getItem("gender"));
-    if (!localStorage.getItem("gender") && index === 1) {
+    if (index === 1) {
       localStorage.setItem("gender", newMessage.message);
     }
-    if (!localStorage.getItem("age") && index === 2) {
+    if (index === 2) {
       localStorage.setItem("age", newMessage.message);
     }
     setLoading(true);
