@@ -15,8 +15,10 @@ const {
   addToWishlist,
   addToCart,
   getProductByAid,
+  uploadPersonalizedImage,
 } = require("../controllers/productController");
 const { isAuthenticatedUser, authorizeRoles } = require("../middlewares/auth");
+const multer = require("multer");
 
 const router = express.Router();
 
@@ -54,5 +56,13 @@ router
   .route("/admin/reviews")
   .get(getProductReviews)
   .delete(isAuthenticatedUser, deleteReview);
+
+  const upload = multer({ dest: "uploads/" });
+
+  router.route("/personalizedImage").post(
+    isAuthenticatedUser,
+    upload.single("image"),
+    uploadPersonalizedImage
+  );
 
 module.exports = router;
