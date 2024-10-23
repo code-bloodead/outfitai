@@ -26,11 +26,14 @@ Tech stack - Langchain, Fast API, ChromaDB, NodeJS, React, MongoDB, Automatic111
 
 ```
 
-# Run frontend & Backend
+# Install dependencies
 npm run setup
-cd frontend && npm start
+
+# Run Backend server
 nodemon backend/server.js
 
+# Run frontend
+cd frontend && npm start
 
 # Tryon demo (API proxy for Huggingface spaces)
 cd tryon_backend

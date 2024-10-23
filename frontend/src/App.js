@@ -106,7 +106,7 @@ function App() {
   return (
     <>
       <Header />
-      {location.pathname == "/ai-outfit-generator" ? null : (
+      {location.pathname === "/ai-outfit-generator" ? null : (
         <Fab
           style={styles.fabio}
           className="shadow-2xl"

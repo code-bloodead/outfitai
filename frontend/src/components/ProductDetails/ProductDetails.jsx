@@ -39,7 +39,6 @@ import BackdropLoader from "../Layouts/BackdropLoader";
 import { myOrders } from "../../actions/orderAction";
 import {
   tryoutSpecifiedCloth,
-  getSampleImages,
   GarmentCategory,
 } from "../../apis/ootdiffusion";
 
