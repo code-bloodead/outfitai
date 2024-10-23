@@ -1,7 +1,7 @@
 import axios from "axios";
 import { base64ToUrl } from "../utils/img";
 
-const TRYON_API_URL = "http://localhost:5000";
+const TRYON_API_URL = "http://127.0.0.1:5000";
 const tryonAxios = axios.create({
   baseURL: TRYON_API_URL,
 })
@@ -57,7 +57,10 @@ export async function tryoutSpecifiedCloth(person_img_url: string, cloth_img_url
     person_img_url: person_img_url,
     cloth_img_url: cloth_img_url,
     category,
-  })
+  }).then(err => {
+    console.log("Error from tryOutfit: ", err);
+    return err;
+  });
   console.log("Response from tryOutfit: ", response);
   return response.data.map(img => base64ToUrl(img.image));
 }

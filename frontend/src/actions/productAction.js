@@ -114,10 +114,10 @@ export const getRecommendedProducts = (cid) => async (dispatch) => {
       payload: modifiedRecommendedProducts,
     });
   } catch (error) {
-    dispatch({
-      type: RECOMMENDED_PRODUCTS_FAIL,
-      payload: error,
-    });
+    // dispatch({
+    //   type: RECOMMENDED_PRODUCTS_FAIL,
+    //   payload: error,
+    // });
   }
 };
 

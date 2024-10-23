@@ -18,11 +18,11 @@ function FashionTrends(props) {
                     total = total + detail.data.length;
                     }
                 )
-                setCount(total)
-
+                setCount(total);
             }
-
-        )
+        ).catch(err => {
+            console.log("Error fetching trends", err);
+        })
     },[])
     return (
         <div style={{ marginLeft: '5vw' }}>

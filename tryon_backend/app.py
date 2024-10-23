@@ -73,6 +73,10 @@ class ImageInputWithCategory(BaseModel):
     cloth_img_url: str
     category: str
 
+@app.get("/testapi")
+@app.get("/")
+async def TestAPI():
+    return { "message": "working" }
 
 @app.post("/tryOutfit")
 async def TrySpecifiedOutfit(image_input: ImageInputWithCategory):
