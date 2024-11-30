@@ -29,17 +29,26 @@ Tech stack - Langchain, Fast API, ChromaDB, NodeJS, React, MongoDB, Automatic111
 # Install dependencies
 npm run setup
 
-# Run Backend server
+# Rename .env.sample files to .env -
+- tryon_backend/.env
+- frontend/.env
+
+# Run Backend server (port - 4000)
 nodemon backend/server.js
 
-# Run frontend
+# Run 
+# Run frontend (port - 3000)
 cd frontend && npm start
 
-# Tryon demo (API proxy for Huggingface spaces)
+# Tryon demo (API proxy for Huggingface spaces) (port - 5002)
 cd tryon_backend
 python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-uvicorn app:app --reload --port=5000
+uvicorn app:app --reload --port=5002
+# or
+fastapi dev --port=5002
 
-```
+# Expose tryon via ngrok (for twilio bot)
+ngrok config add-authtoken <your_token>
+ngrok http 5002 --domain=merry-perfectly-jay.ngrok-free.app

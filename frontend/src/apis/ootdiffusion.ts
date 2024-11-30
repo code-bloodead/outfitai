@@ -1,7 +1,7 @@
 import axios from "axios";
 import { base64ToUrl } from "../utils/img";
 
-const TRYON_API_URL = "http://127.0.0.1:5000";
+const TRYON_API_URL = "http://127.0.0.1:5002";
 const tryonAxios = axios.create({
   baseURL: TRYON_API_URL,
 })

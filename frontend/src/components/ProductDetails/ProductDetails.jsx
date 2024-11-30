@@ -252,11 +252,12 @@ const ProductDetails = () => {
       abortWithErr();
     });
 
+    console.log("Generated Images", newGeneratedImages);
+
     if (!newGeneratedImages || newGeneratedImages?.length === 0) {
       abortWithErr();
       return;
     }
-    console.log("Generated Images", newGeneratedImages);
     setGeneratingTryout(false);
 
     setGeneratedImageSrcs((prevImageSrcs) => [
