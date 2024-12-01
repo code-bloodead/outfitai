@@ -56,6 +56,7 @@ const Chatbot = () => {
       ) || []
     );
     const article_ids = products.map((product) => product.meta.article_id);
+    console.log(article_ids);
     dispatch(addPersonalizedProducts(article_ids));
 
     setLoading(false);

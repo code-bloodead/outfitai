@@ -20,10 +20,33 @@ function extractOutfitDescriptions(text: string) {
 }
 
 function extractAIResponse(input: string): string {
-  const outfitsRegex = /Outfit \d+:.*?(?=\nOutfit \d+:|$)/gs;
-  const outfits = input.match(outfitsRegex);
-  if (outfits && outfits.length >= 4) {
-    return outfits.slice(1).join("\n");
+  // const outfitsRegex = /Outfit \d+:.*?(?=\nOutfit \d+:|$)/gs;
+  // const outfits = input.match(outfitsRegex);
+  // console.log("Extracted outfits", outfits);
+  // const skippedOutfits = outfits.slice(2);
+  // console.log("Skipped outfits", skippedOutfits);
+  // if (skippedOutfits && skippedOutfits.length >= 4) {
+  //   return skippedOutfits.join("\n");
+  // } else {
+  //   return "Not enough outfits found.";
+  // }
+
+  const startIndex = input.indexOf("Answer -", input.indexOf("Answer -") + 1);
+
+  // Extract the substring starting from the second "Answer -"
+  const extractedResponse = input.slice(startIndex);
+
+  // Match all outfits using a regex pattern
+  const outfitRegex = /Outfit \d+:.*?(?=(Outfit \d+:|$))/gs;
+  const outfits = extractedResponse.match(outfitRegex);
+
+  // Trim and clean up each outfit
+  const extractedOutfits = outfits
+    ? outfits.map((outfit) => outfit.trim())
+    : [];
+  console.log("Extracted outfits", extractedOutfits);
+  if (extractedOutfits.length >= 4) {
+    return extractedOutfits.join("\n\n");
   } else {
     return "Not enough outfits found.";
   }
